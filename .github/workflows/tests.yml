@@ -8,7 +8,7 @@ on:
 env:
   GO111MODULE: "on"
   GOLANG_VERSION: ~1.26
-  GOLANGCI_LINT_VERSION: v1.64.8
+  GOLANGCI_LINT_VERSION: v2.9.0
 
 jobs:
   lint:
@@ -30,7 +30,6 @@ jobs:
         uses: golangci/golangci-lint-action@v9
         with:
           version: ${{ env.GOLANGCI_LINT_VERSION }}
-          install-mode: "goinstall"
           working-directory: ${{ env.BRANCH }}
 
   tests:
