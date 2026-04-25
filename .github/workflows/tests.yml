@@ -7,9 +7,9 @@ on:
 
 env:
   GO111MODULE: "on"
-  GOLANG_VERSION: ~1.23
-  GOLANGCI_LINT_VERSION: v1.63.4
-  
+  GOLANG_VERSION: ~1.26
+  GOLANGCI_LINT_VERSION: v1.64.8
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -59,7 +59,8 @@ jobs:
       - name: Bash tests
         shell: bash
         run: ./test.sh
-        if: contains('hw01_hello_otus hw07_file_copying hw08_envdir_tool hw11_telnet_client', env.BRANCH)
+        if: contains('hw01_hello_otus hw07_file_copying hw08_envdir_tool
+          hw11_telnet_client', env.BRANCH)
         working-directory: ${{ env.BRANCH }}
 
   tests_by_makefile:
