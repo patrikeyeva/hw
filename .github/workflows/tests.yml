@@ -18,14 +18,14 @@ jobs:
       - name: Extract branch name
         run: echo "BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
 
+      - name: Check out code
+        uses: actions/checkout@v5
+
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
           go-version: ${{ env.GOLANG_VERSION }}
           cache-dependency-path: ${{ env.BRANCH }}/go.mod
-
-      - name: Check out code
-        uses: actions/checkout@v5
 
       - name: Linters
         uses: golangci/golangci-lint-action@v9
@@ -40,14 +40,14 @@ jobs:
       - name: Extract branch name
         run: echo "BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
 
+      - name: Check out code
+        uses: actions/checkout@v5
+
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
           go-version: ${{ env.GOLANG_VERSION }}
           cache-dependency-path: ${{ env.BRANCH }}/go.mod
-
-      - name: Check out code
-        uses: actions/checkout@v5
 
       - name: Unit tests
         run: go test -v -count=1 -race -timeout=1m ./...
@@ -69,15 +69,15 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(github.ref, 'calendar')
     steps:
+
+      - name: Check out code
+        uses: actions/checkout@v5
+
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
           go-version: ${{ env.GOLANG_VERSION }}
           cache-dependency-path: ${{ env.BRANCH }}/go.mod
-
-      - name: Check out code
-        uses: actions/checkout@v5
-
       - name: make lint
         run: make lint
         working-directory: hw12_13_14_15_16_calendar
