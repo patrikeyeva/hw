@@ -22,6 +22,7 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version: ${{ env.GOLANG_VERSION }}
+          cache-dependency-path: ${{ env.BRANCH }}/go.mod
 
       - name: Check out code
         uses: actions/checkout@v5
@@ -43,6 +44,7 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version: ${{ env.GOLANG_VERSION }}
+          cache-dependency-path: ${{ env.BRANCH }}/go.mod
 
       - name: Check out code
         uses: actions/checkout@v5
@@ -71,6 +73,7 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version: ${{ env.GOLANG_VERSION }}
+          cache-dependency-path: ${{ env.BRANCH }}/go.mod
 
       - name: Check out code
         uses: actions/checkout@v5
