@@ -17,14 +17,19 @@ type Word struct {
 }
 
 func cmp(a, b Word) int {
-	if a.count == b.count {
-		if a.word < b.word {
+	if a.count != b.count {
+		if a.count > b.count {
 			return -1
-		} else if a.word > b.word {
-			return 1
 		}
+		return 1
 	}
-	return int(b.count - a.count)
+	if a.word < b.word {
+		return -1
+	}
+	if a.word > b.word {
+		return 1
+	}
+	return 0
 }
 
 func cleanWord(word string) string {
