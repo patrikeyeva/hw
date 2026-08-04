@@ -74,6 +74,7 @@ linters:
       - linters:
           - dupl
           - errcheck
+          - goconst
           - gocyclo
           - gosec
         path: _test\.go
