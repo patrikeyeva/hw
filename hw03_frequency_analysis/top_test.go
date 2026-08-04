@@ -7,7 +7,7 @@ import (
 )
 
 // Change to true if needed.
-var taskWithAsteriskIsCompleted = false
+var taskWithAsteriskIsCompleted = true
 
 var text = `Как видите, он  спускается  по  лестнице  вслед  за  своим
 	другом   Кристофером   Робином,   головой   вниз,  пересчитывая
@@ -77,6 +77,137 @@ func TestTop10(t *testing.T) {
 				"то",        // 4
 			}
 			require.Equal(t, expected, Top10(text))
+		}
+	})
+
+	t.Run("readme example", func(t *testing.T) {
+		input := "cat and dog, one dog,two cats and one man"
+
+		if taskWithAsteriskIsCompleted {
+			expected := []string{
+				"and",     // 2
+				"one",     // 2
+				"cat",     // 1
+				"cats",    // 1
+				"dog",     // 1
+				"dog,two", // 1
+				"man",     // 1
+			}
+			require.Equal(t, expected, Top10(input))
+		} else {
+			expected := []string{
+				"and",     // 2
+				"one",     // 2
+				"cat",     // 1
+				"cats",    // 1
+				"dog,",    // 1
+				"dog,two", // 1
+				"man",     // 1
+			}
+			require.Equal(t, expected, Top10(input))
+		}
+	})
+
+	t.Run("lexicographic order on equal frequency", func(t *testing.T) {
+		input := "banana apple cherry apple banana cherry"
+
+		expected := []string{
+			"apple",  // 2
+			"banana", // 2
+			"cherry", // 2
+		}
+		require.Equal(t, expected, Top10(input))
+	})
+
+	t.Run("less than 10 words", func(t *testing.T) {
+		input := "one two two three three three"
+
+		expected := []string{
+			"three", // 3
+			"two",   // 2
+			"one",   // 1
+		}
+		require.Equal(t, expected, Top10(input))
+	})
+
+	t.Run("case and punctuation", func(t *testing.T) {
+		input := "Нога нога !!!нога,,, Нога! ногу"
+
+		if taskWithAsteriskIsCompleted {
+			expected := []string{
+				"нога", // 4
+				"ногу", // 1
+			}
+			require.Equal(t, expected, Top10(input))
+		} else {
+			expected := []string{
+				"!!!нога,,,", // 1
+				"Нога",       // 1
+				"Нога!",      // 1
+				"нога",       // 1
+				"ногу",       // 1
+			}
+			require.Equal(t, expected, Top10(input))
+		}
+	})
+
+	t.Run("dash is not a word", func(t *testing.T) {
+		input := "word - word - other"
+
+		if taskWithAsteriskIsCompleted {
+			expected := []string{
+				"word",  // 2
+				"other", // 1
+			}
+			require.Equal(t, expected, Top10(input))
+		} else {
+			expected := []string{
+				"-",     // 2
+				"word",  // 2
+				"other", // 1
+			}
+			require.Equal(t, expected, Top10(input))
+		}
+	})
+
+	t.Run("punctuation inside word", func(t *testing.T) {
+		input := "какой-то какойто какой-то dog,cat dogcat"
+
+		expected := []string{
+			"какой-то", // 2
+			"dog,cat",  // 1
+			"dogcat",   // 1
+			"какойто",  // 1
+		}
+		require.Equal(t, expected, Top10(input))
+	})
+
+	t.Run("more than 10 equal frequency words", func(t *testing.T) {
+		input := "j i h g f e d c b a k l"
+
+		expected := []string{
+			"a", // 1
+			"b", // 1
+			"c", // 1
+			"d", // 1
+			"e", // 1
+			"f", // 1
+			"g", // 1
+			"h", // 1
+			"i", // 1
+			"j", // 1
+		}
+		require.Equal(t, expected, Top10(input))
+	})
+
+	t.Run("only punctuation dash", func(t *testing.T) {
+		if taskWithAsteriskIsCompleted {
+			require.Empty(t, Top10("- - -"))
+		} else {
+			expected := []string{
+				"-", // 3
+			}
+			require.Equal(t, expected, Top10("- - -"))
 		}
 	})
 }
